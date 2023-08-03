@@ -24,6 +24,8 @@ public class JinkinsController {
         return ResponseEntity.ok("Hello, world!");
     }
 
+
+
     @GetMapping("/greet")
     public ResponseEntity<String> greet(@RequestParam(name = "name", defaultValue = "Guest") String name) {
         String message = "Hello, " + name + "!";
