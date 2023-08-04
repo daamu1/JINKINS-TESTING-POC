@@ -49,6 +49,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>jinking-docker</finalName>
 	</build>
 
 </project>

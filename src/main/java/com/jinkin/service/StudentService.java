@@ -12,7 +12,6 @@ public class StudentService {
     private List<Student> students = new ArrayList<>();
 
     public StudentService() {
-        // Initialize with some sample data
         students.add(new Student(1L, "John Doe", 20));
         students.add(new Student(2L, "Jane Smith", 22));
         students.add(new Student(3L, "Michael Johnson", 19));
