@@ -1,64 +1,62 @@
 pipeline {
-    agent any
+    agent any 
     stages {
-        stage('Clean') {
+        stage('Compile and Clean') { 
             steps {
-                sh "mvn clean "
+
+                sh "mvn clean compile"
             }
         }
-        stage('Compile') {
-            steps {
-                sh "mvn compile"
-            }
-        }
-        stage('Test') {
+        stage('Test') { 
             steps {
                 sh "mvn test site"
             }
-
-            post {
+            
+             post {
                 always {
-                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'   
                 }
-            }
+            }     
         }
 
-        stage('Package') {
+        stage('deploy') { 
             steps {
                 sh "mvn package"
             }
         }
 
-        stage('Build Docker Image'){
+
+        stage('Build Docker image'){
             steps {
-                sh 'docker build -t saurabh03121999/jinking-docker:${BUILD_NUMBER} .'
+                sh 'docker build -t saurabh03121999/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
 
-       stage('Docker Login'){
-
-                 steps {
-                      withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-                         sh "docker login -u saurabh03121999 -p ${Dockerpwd}"
-                     }
-                 }
-             }
+        stage('Docker Login'){
+            
+            steps {
+                 withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
+                    sh "docker login -u saurabh03121999 -p ${Dockerpwd}"
+                }
+            }                
+        }
 
         stage('Docker Push'){
             steps {
-                sh "docker push saurabh03121999/jinking-docker:${BUILD_NUMBER}"
+                sh 'docker push saurabh03121999/docker_jenkins_pipeline:${BUILD_NUMBER}'
+            }
+        }
+        
+        stage('Docker deploy'){
+            steps {
+                sh 'docker run -itd -p 8090:8090 saurabh03121999/springboot:0.0.3'
             }
         }
 
-        stage('Docker Deploy'){
+        
+        stage('Archving') { 
             steps {
-                sh "docker run -d -p 8090:8090 saurabh03121999/jinking-docker:${BUILD_NUMBER}"
-            }
-        }
-
-        stage('Archiving') {
-            steps {
-                archiveArtifacts 'target/*.jar'
+                 archiveArtifacts '**/target/*.jar'
             }
         }
     }
