@@ -30,13 +30,14 @@ pipeline {
             }
         }
 
-        stage('Docker Login'){
-            steps {
-                withCredentials([string(credentialsId: 'saurabh03121999', variable: 'Tungnath@123')]) {
-                    sh "docker login -u saurabhmaithani01921@gmail.com -p \"${Tungnath@123}\""
-                }
-            }
-        }
+       stage('Docker Login'){
+
+                 steps {
+                      withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
+                         sh "docker login -u saurabh03121999 -p ${Dockerpwd}"
+                     }
+                 }
+             }
 
         stage('Docker Push'){
             steps {
