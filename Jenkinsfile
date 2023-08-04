@@ -18,13 +18,13 @@ pipeline {
             }
         }
 
-        stage('deploy') {
+        stage('Package') {
             steps {
                 sh "mvn package"
             }
         }
 
-        stage('Build Docker image'){
+        stage('Build Docker Image'){
             steps {
                 sh 'docker build -t saurabh03121999/jinking-docker:${BUILD_NUMBER} .'
             }
@@ -45,15 +45,15 @@ pipeline {
             }
         }
 
-        stage('Docker deploy'){
+        stage('Docker Deploy'){
             steps {
-                sh "docker run -itd -p 8090:8090 saurabh03121999/jinking-docker:${BUILD_NUMBER}"
+                sh "docker run -d -p 8090:8090 saurabh03121999/jinking-docker:${BUILD_NUMBER}"
             }
         }
 
         stage('Archiving') {
             steps {
-                archiveArtifacts '**/target/*.jar'
+                archiveArtifacts 'target/*.jar'
             }
         }
     }
