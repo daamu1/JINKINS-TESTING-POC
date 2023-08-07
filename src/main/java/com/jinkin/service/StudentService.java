@@ -27,13 +27,11 @@ public class StudentService {
                 .findFirst()
                 .orElse(null);
     }
-
     public Student addStudent(Student student) {
         student.setId(generateNewId());
         students.add(student);
         return student;
     }
-
     private Long generateNewId() {
         return students.stream()
                 .mapToLong(Student::getId)

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
-
     @Autowired
     private StudentService studentService;
 
@@ -21,7 +20,6 @@ public class StudentController {
         List<Student> students = studentService.getAllStudents();
         return ResponseEntity.ok(students);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
         Student student = studentService.getStudentById(id);
@@ -31,7 +29,6 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PostMapping
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         Student addedStudent = studentService.addStudent(student);
