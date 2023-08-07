@@ -46,10 +46,10 @@ pipeline {
                 sh 'docker push saurabh03121999/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
         }
-        
+
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8090:8090 saurabh03121999/springboot:0.0.3'
+                sh 'docker run -itd -p 8090:8090 saurabh03121999/docker_jenkins_pipeline'
             }
         }
 
