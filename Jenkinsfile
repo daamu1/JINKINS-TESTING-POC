@@ -49,7 +49,7 @@ pipeline {
 
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8090:8090 saurabh03121999/docker_jenkins_pipeline:${BUILD_NUMBER}'
+                sh 'docker run -itd -p 9090:9090 saurabh03121999/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
         }
 
